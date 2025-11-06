@@ -1,4 +1,4 @@
-# 🐍 ioBroker-Logs im RAM – Das Projekt, das deine SD-Karte liebt.
+# 🐍 ioBroker-Logs im RAM – Das Projekt, das deine SD-Karte liebt
 
 Willkommen zu unserem genialen **iobroker-Log-Projekt**, das die SD-Karte deines Raspberry Pi schützt:
 
