@@ -236,5 +236,3 @@ ls -l /opt/iobroker/log_backup
 Dieses Projekt wird **ohne Garantie** bereitgestellt.
 Der Autor übernimmt **keine Haftung** für Schäden an Hardware, Datenverlust oder sonstige Probleme.
 Benutzung erfolgt **auf eigene Verantwortung**.
-
-```
