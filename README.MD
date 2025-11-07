@@ -1,3 +1,21 @@
+
+
+# 🐍 ioBroker-Logs im RAM – Das Projekt, das deine SD-Karte liebt
+
+## 📑 Inhaltsverzeichnis
+- [Was dieses Projekt tut](#-was-dieses-projekt-tut)
+- [Wichtiger Punkt: Cron beim Boot](#⚠️-wichtiger-punkt-cron-beim-boot)
+- [Anleitung – Schritt für Schritt](#🧑‍💻-anleitung-–-schritt-für-schritt)
+  - [Vorbereitendes Skript erstellen](#1️⃣-vorbereitendes-skript-erstellen)
+  - [Cron-Job für Boot einrichten](#2️⃣-cron-job-für-boot-einrichten)
+  - [Cron-Job: Alte Logs löschen (optional)](#3️⃣-cron-job-alte-logs-löschen-optional)
+  - [Test](#4️⃣-test)
+- [Bonus-Tipps](#💡-bonus-tipps)
+- [Vorteile](#✅-vorteile)
+- [Nachteile / Risiken](#⚠️-nachteile--risiken)
+- [RAM-Log Rückbau – Mini-Checkliste](#🔧-ram-log-rückbau-–-mini-checkliste)
+- [Haftungsausschluss](#📝-haftungsausschluss)
+
 # 🐍 ioBroker-Logs im RAM – Das Projekt, das deine SD-Karte liebt
 
 Willkommen zu unserem genialen **iobroker-Log-Projekt**, das die SD-Karte deines Raspberry Pi schützt:
@@ -13,7 +31,6 @@ Wir haben eine **clevere Lösung**, die dafür sorgt, dass **alle Log-Dateien vo
 * Ein kleiner Helfer (Cron) sorgt dafür, dass **alte Logs automatisch gelöscht werden** ✨
 
 ---
-
 ## 🎯 Was dieses Projekt tut
 
 1. Es wird ein **RAM-Verzeichnis** erstellt (`/run/iobroker-logs`), das beim Neustart leer ist 💨.
@@ -162,6 +179,56 @@ tail -f /opt/iobroker/log/iobroker.current.log
 * Wenn der Pi abstürzt, gehen alle Logs im RAM verloren
 
 ---
+
+
+## 🔧 RAM-Log Rückbau – Mini-Checkliste
+
+1. **ioBroker stoppen**
+
+```bash
+sudo systemctl stop iobroker.service
+```
+
+2. **RAM-Logs sichern**
+
+```bash
+sudo mkdir -p /opt/iobroker/log_backup
+sudo cp -r /run/iobroker-logs/iobroker/* /opt/iobroker/log_backup/
+sudo chown -R iobroker:iobroker /opt/iobroker/log_backup
+```
+
+3. **Link entfernen & Original-Verzeichnis wiederherstellen**
+
+```bash
+sudo rm /opt/iobroker/log
+sudo mkdir -p /opt/iobroker/log
+sudo chown -R iobroker:iobroker /opt/iobroker/log
+```
+
+4. **Cron und Systemd-Service löschen**
+
+```bash
+sudo crontab -e    # RAM-Log Zeilen löschen
+sudo systemctl disable iobroker-ramlog.service
+sudo rm /etc/systemd/system/iobroker-ramlog.service
+sudo systemctl daemon-reload
+```
+
+5. **ioBroker neu starten & Kontrolle**
+
+```bash
+sudo systemctl start iobroker.service
+ls -l /opt/iobroker/log
+ls -l /opt/iobroker/log_backup
+```
+
+* `/opt/iobroker/log` → normales Log-Verzeichnis auf SD
+* `/opt/iobroker/log_backup` → gesicherte RAM-Logs
+
+---
+So hast du alles sauber rückgebaut, keine Logs gehen verloren, Cron und Services sind entfernt, und ioBroker schreibt wieder normal auf die SD-Karte.
+
+
 
 ## 📝 Haftungsausschluss
 
