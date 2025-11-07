@@ -1,37 +1,22 @@
-
-
 # 🐍 ioBroker-Logs im RAM – Das Projekt, das deine SD-Karte liebt
 
-## Inhaltsverzeichnis
+## 📑 Inhaltsverzeichnis
 - [Was dieses Projekt tut](#was-dieses-projekt-tut)
-- [Wichtiger Punkt: Cron beim Boot](#wichtiger-punkt-cron-beim-boot)
-- [Anleitung – Schritt für Schritt](#anleitung-schritt-für-schritt)
-  - [Vorbereitendes Skript erstellen](#1-vorbereitendes-skript-erstellen)
-  - [Cron-Job für Boot einrichten](#2-cron-job-für-boot-einrichten)
-  - [Cron-Job: Alte Logs löschen (optional)](#3-cron-job-alte-logs-löschen-optional)
-  - [Test](#4-test)
-- [Bonus-Tipps](#bonus-tipps)
+- [Wichtiger Punkt Cron beim Boot](#wichtiger-punkt-cron-beim-boot)
+- [Anleitung Schritt für Schritt](#anleitung-schritt-fuer-schritt)
+  - [1 Vorbereitendes Skript erstellen](#1-vorbereitendes-skript-erstellen)
+  - [2 Cron-Job für Boot einrichten](#2-cron-job-fuer-boot-einrichten)
+  - [3 Cron-Job Alte Logs löschen optional](#3-cron-job-alte-logs-loeschen-optional)
+  - [4 Test](#4-test)
+- [Bonus Tipps](#bonus-tipps)
 - [Vorteile](#vorteile)
-- [Nachteile / Risiken](#nachteile--risiken)
-- [RAM-Log Rückbau – Mini-Checkliste](#ram-log-rückbau-mini-checkliste)
+- [Nachteile Risiken](#nachteile-risiken)
+- [RAM-Log Rückbau Mini-Checkliste](#ram-log-rueckbau-mini-checkliste)
 - [Haftungsausschluss](#haftungsausschluss)
 
-
-# 🐍 ioBroker-Logs im RAM – Das Projekt, das deine SD-Karte liebt
-
-Willkommen zu unserem genialen **iobroker-Log-Projekt**, das die SD-Karte deines Raspberry Pi schützt:
-
-> SD-Karten sind wie kleine Hunde 🐶: Man muss gut zu ihnen sein, sonst werden sie müde und kaputt 💔.
-
-Wir haben eine **clevere Lösung**, die dafür sorgt, dass **alle Log-Dateien von ioBroker in den RAM geschrieben werden**, also in den blitzschnellen Arbeitsspeicher des Pi ⚡.
-
-**Das bedeutet:**
-
-* Deine SD-Karte wird **nicht mehr ständig vollgeschrieben** 🛡️
-* Dein Raspberry Pi bleibt **schnell, glücklich und gesund** 😎
-* Ein kleiner Helfer (Cron) sorgt dafür, dass **alte Logs automatisch gelöscht werden** ✨
-
 ---
+
+<a id="was-dieses-projekt-tut"></a>
 ## 🎯 Was dieses Projekt tut
 
 1. Es wird ein **RAM-Verzeichnis** erstellt (`/run/iobroker-logs`), das beim Neustart leer ist 💨.
@@ -41,20 +26,23 @@ Wir haben eine **clevere Lösung**, die dafür sorgt, dass **alle Log-Dateien vo
 
 ---
 
-## ⚠️ Wichtiger Punkt: Cron beim Boot
+<a id="wichtiger-punkt-cron-beim-boot"></a>
+## ⚠️ Wichtiger Punkt Cron beim Boot
 
 > Dies ist **der entscheidende Punkt**, damit ioBroker nach jedem Neustart funktioniert.
 > Wenn Cron nicht korrekt eingerichtet ist, startet ioBroker **nicht** und Logs existieren nicht.
 
 ---
 
-## 🧑‍💻 Anleitung – Schritt für Schritt
+<a id="anleitung-schritt-fuer-schritt"></a>
+## 🧑‍💻 Anleitung Schritt für Schritt
 
+<a id="1-vorbereitendes-skript-erstellen"></a>
 ### 1️⃣ Vorbereitendes Skript erstellen
 
 ```bash
 sudo nano /usr/local/bin/iobroker-ramlog.sh
-```
+````
 
 Inhalt:
 
@@ -81,6 +69,8 @@ sudo chmod +x /usr/local/bin/iobroker-ramlog.sh
 
 ---
 
+<a id="2-cron-job-fuer-boot-einrichten"></a>
+
 ### 2️⃣ Cron-Job für Boot einrichten
 
 * Cron für root bearbeiten:
@@ -104,7 +94,9 @@ sudo crontab -e
 
 ---
 
-### 3️⃣ Cron-Job: Alte Logs löschen (optional)
+<a id="3-cron-job-alte-logs-loeschen-optional"></a>
+
+### 3️⃣ Cron-Job Alte Logs löschen optional
 
 Damit der RAM nicht voll wird, kannst du einen weiteren Cron-Job einrichten, z. B. alle 2 Tage:
 
@@ -123,6 +115,8 @@ Füge hinzu:
 * ioBroker legt beim nächsten Log-Eintrag automatisch neue Dateien an
 
 ---
+
+<a id="4-test"></a>
 
 ### 4️⃣ Test
 
@@ -149,7 +143,9 @@ systemctl status iobroker.service
 
 ---
 
-## 💡 Bonus-Tipps
+<a id="bonus-tipps"></a>
+
+## 💡 Bonus Tipps
 
 * Backup-Skripte einbauen, falls bestimmte Logs doch auf SD gespeichert werden sollen 💾
 * Logs live beobachten:
@@ -162,6 +158,8 @@ tail -f /opt/iobroker/log/iobroker.current.log
 
 ---
 
+<a id="vorteile"></a>
+
 ## ✅ Vorteile
 
 * SD-Karte wird **geschont** – weniger Verschleiß
@@ -172,17 +170,20 @@ tail -f /opt/iobroker/log/iobroker.current.log
 
 ---
 
-## ⚠️ Nachteile / Risiken
+<a id="nachteile-risiken"></a>
+
+## ⚠️ Nachteile Risiken
 
 * Logs gehen beim Neustart **verloren**, außer ein Backup wird erstellt
-* RAM wird für Logs verwendet → bei sehr großen Logmengen kann RAM knapp werden
+* RAM wird für Logs verwendet → bei sehr großen Log-Mengen kann RAM knapp werden
 * **Cron muss korrekt eingerichtet sein** – sonst startet ioBroker nicht und Logs existieren nicht
 * Wenn der Pi abstürzt, gehen alle Logs im RAM verloren
 
 ---
 
+<a id="ram-log-rueckbau-mini-checkliste"></a>
 
-## 🔧 RAM-Log Rückbau – Mini-Checkliste
+## 🔧 RAM-Log Rückbau Mini-Checkliste
 
 1. **ioBroker stoppen**
 
@@ -227,9 +228,8 @@ ls -l /opt/iobroker/log_backup
 * `/opt/iobroker/log_backup` → gesicherte RAM-Logs
 
 ---
-So hast du alles sauber rückgebaut, keine Logs gehen verloren, Cron und Services sind entfernt, und ioBroker schreibt wieder normal auf die SD-Karte.
 
-
+<a id="haftungsausschluss"></a>
 
 ## 📝 Haftungsausschluss
 
@@ -237,4 +237,4 @@ Dieses Projekt wird **ohne Garantie** bereitgestellt.
 Der Autor übernimmt **keine Haftung** für Schäden an Hardware, Datenverlust oder sonstige Probleme.
 Benutzung erfolgt **auf eigene Verantwortung**.
 
----
+```
