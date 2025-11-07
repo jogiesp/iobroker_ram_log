@@ -2,19 +2,20 @@
 
 # 🐍 ioBroker-Logs im RAM – Das Projekt, das deine SD-Karte liebt
 
-## 📑 Inhaltsverzeichnis
-- [Was dieses Projekt tut](#-was-dieses-projekt-tut)
-- [Wichtiger Punkt: Cron beim Boot](#⚠️-wichtiger-punkt-cron-beim-boot)
-- [Anleitung – Schritt für Schritt](#🧑‍💻-anleitung-–-schritt-für-schritt)
-  - [Vorbereitendes Skript erstellen](#1️⃣-vorbereitendes-skript-erstellen)
-  - [Cron-Job für Boot einrichten](#2️⃣-cron-job-für-boot-einrichten)
-  - [Cron-Job: Alte Logs löschen (optional)](#3️⃣-cron-job-alte-logs-löschen-optional)
-  - [Test](#4️⃣-test)
-- [Bonus-Tipps](#💡-bonus-tipps)
-- [Vorteile](#✅-vorteile)
-- [Nachteile / Risiken](#⚠️-nachteile--risiken)
-- [RAM-Log Rückbau – Mini-Checkliste](#🔧-ram-log-rückbau-–-mini-checkliste)
-- [Haftungsausschluss](#📝-haftungsausschluss)
+## Inhaltsverzeichnis
+- [Was dieses Projekt tut](#was-dieses-projekt-tut)
+- [Wichtiger Punkt: Cron beim Boot](#wichtiger-punkt-cron-beim-boot)
+- [Anleitung – Schritt für Schritt](#anleitung-schritt-für-schritt)
+  - [Vorbereitendes Skript erstellen](#1-vorbereitendes-skript-erstellen)
+  - [Cron-Job für Boot einrichten](#2-cron-job-für-boot-einrichten)
+  - [Cron-Job: Alte Logs löschen (optional)](#3-cron-job-alte-logs-löschen-optional)
+  - [Test](#4-test)
+- [Bonus-Tipps](#bonus-tipps)
+- [Vorteile](#vorteile)
+- [Nachteile / Risiken](#nachteile--risiken)
+- [RAM-Log Rückbau – Mini-Checkliste](#ram-log-rückbau-mini-checkliste)
+- [Haftungsausschluss](#haftungsausschluss)
+
 
 # 🐍 ioBroker-Logs im RAM – Das Projekt, das deine SD-Karte liebt
 
